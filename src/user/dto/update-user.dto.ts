@@ -1,4 +1,10 @@
-import { PartialType } from '@nestjs/mapped-types';
-import { CreateUserDto } from './create-user.dto';
+import { MinLength } from 'class-validator';
+import { UpdatePassword } from '../interfaces/user.interface';
 
-export class UpdateUserDto extends PartialType(CreateUserDto) {}
+export class UpdateUserDto implements UpdatePassword {
+  @MinLength(8)
+  oldPassword: string;
+
+  @MinLength(8)
+  newPassword: string;
+}

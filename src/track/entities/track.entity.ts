@@ -1,4 +1,4 @@
-import { IsUUID, IsString, IsInt } from 'class-validator';
+import { IsUUID, IsString, IsInt, IsOptional } from 'class-validator';
 import { Track } from '../interfaces/track.interface';
 
 export class TrackEntity implements Track {
@@ -9,9 +9,11 @@ export class TrackEntity implements Track {
   name: string;
 
   @IsUUID(4)
+  @IsOptional()
   artistId: string | null; // refers to Artist
 
   @IsUUID(4)
+  @IsOptional()
   albumId: string | null; // refers to Album
 
   @IsInt()

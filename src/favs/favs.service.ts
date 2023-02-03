@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { CreateFavDto } from './dto/create-fav.dto';
+import { CreateFavDto } from './dto/favs.dto';
 import { UpdateFavDto } from './dto/update-fav.dto';
 
 @Injectable()

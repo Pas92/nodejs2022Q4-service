@@ -6,3 +6,8 @@ export interface User {
   createdAt: number; // timestamp of creation
   updatedAt: number; // timestamp of last update
 }
+
+export interface UpdatePassword {
+  oldPassword: string; // previous password
+  newPassword: string; // new password
+}
