@@ -1,1 +1,19 @@
-export class Fav {}
+import { IsUUID } from 'class-validator';
+import { Favorites } from '../interfaces/fav.interface';
+
+export class FavEntity implements Favorites {
+  @IsUUID(4, {
+    each: true,
+  })
+  artists: string[];
+
+  @IsUUID(4, {
+    each: true,
+  })
+  albums: string[];
+
+  @IsUUID(4, {
+    each: true,
+  })
+  tracks: string[];
+}
