@@ -1,17 +1,17 @@
-import { IsUUID, IsInt, IsAlphanumeric, IsOptional } from 'class-validator';
+import { IsUUID, IsInt, IsString, IsOptional } from 'class-validator';
 import { Album } from '../interfaces/album.interface';
 
 export class AlbumEntity implements Album {
   @IsUUID(4)
   id: string;
 
-  @IsAlphanumeric()
+  @IsString()
   name: string;
 
   @IsInt()
   year: number;
 
-  @IsOptional()
   @IsUUID(4)
+  @IsOptional()
   artistId: string | null;
 }
