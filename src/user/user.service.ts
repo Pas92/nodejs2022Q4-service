@@ -1,26 +1,43 @@
 import { Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { UserEntity } from './entities/user.entity';
+import { UserStorage } from './storage/user.storage';
+import { FindUserDTO } from './dto/find-user.dto';
+
+import { v4 as uuidv4 } from 'uuid';
 
 @Injectable()
 export class UserService {
-  create(createUserDto: CreateUserDto) {
-    return 'This action adds a new user';
+  constructor(private storage: UserStorage) {}
+
+  create(createUserDto: CreateUserDto): FindUserDTO {
+    const user: UserEntity = {
+      ...createUserDto,
+      id: uuidv4(),
+      createdAt: new Date().getTime(),
+      updatedAt: new Date().getTime(),
+      version: 1,
+    };
+    this.storage.create(user);
+    const { password, ...returnedUser } = user;
+
+    return returnedUser;
   }
 
-  findAll() {
-    return `This action returns all user`;
+  findAll(): FindUserDTO[] {
+    return this.storage.findAll();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  findOne(id: string): FindUserDTO {
+    return this.storage.findOne(id);
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+  update(id: string, updateUserDto: UpdateUserDto): FindUserDTO {
+    return this.storage.update(id, updateUserDto);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  remove(id: string) {
+    return this.storage.remove(id);
   }
 }
