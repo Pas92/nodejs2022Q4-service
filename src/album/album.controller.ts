@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   ParseUUIDPipe,
+  HttpCode,
 } from '@nestjs/common';
 import { dtoValidationPipe } from 'src/shared/validators/dto.validator';
 import { AlbumService } from './album.service';
@@ -41,6 +42,7 @@ export class AlbumController {
   }
 
   @Delete(':id')
+  @HttpCode(204)
   remove(@Param('id', ParseUUIDPipe) id: string) {
     return this.albumService.remove(id);
   }

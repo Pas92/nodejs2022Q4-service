@@ -1,5 +1,5 @@
-import { Injectable } from '@nestjs/common';
-import { NotFoundException } from '@nestjs/common/exceptions';
+import { HttpStatus, Injectable } from '@nestjs/common';
+import { HttpException, NotFoundException } from '@nestjs/common/exceptions';
 import { UpdateArtistDto } from '../dto/update-artist.dto';
 import { ArtistEntity } from '../entities/artist.entity';
 

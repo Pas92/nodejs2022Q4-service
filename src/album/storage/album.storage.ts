@@ -5,7 +5,7 @@ import { AlbumEntity } from '../entities/album.entity';
 
 @Injectable()
 export class AlbumStorage {
-  private readonly storage: AlbumEntity[] = [];
+  private storage: AlbumEntity[] = [];
 
   create(album: AlbumEntity): void {
     this.storage.push(album);
@@ -46,6 +46,6 @@ export class AlbumStorage {
       throw new NotFoundException(`Album with ID ${id} does not found`);
     }
 
-    this.storage.filter((album) => album.id !== id);
+    this.storage = this.storage.filter((album) => album.id !== id);
   }
 }
