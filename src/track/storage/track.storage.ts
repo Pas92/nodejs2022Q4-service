@@ -15,9 +15,9 @@ export class TrackStorage {
     return this.storage;
   }
 
-  findOne(id: string): TrackEntity {
+  findOne(id: string, isFavsSearch: boolean = false): TrackEntity {
     const track = this.storage.find((track) => track.id === id);
-    if (track === undefined) {
+    if (track === undefined && !isFavsSearch) {
       throw new NotFoundException(`Track with ID ${id} does not found`);
     }
 

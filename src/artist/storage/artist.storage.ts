@@ -18,9 +18,9 @@ export class ArtistStorage {
     return this.storage;
   }
 
-  findOne(id: string): ArtistEntity {
+  findOne(id: string, isFavsSearch: boolean = false): ArtistEntity {
     const artist = this.storage.find((artist) => artist.id === id);
-    if (artist === undefined) {
+    if (artist === undefined && !isFavsSearch) {
       throw new NotFoundException(`Artist with ID ${id} does not found`);
     }
 
