@@ -1,11 +1,14 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
 import { HttpException, NotFoundException } from '@nestjs/common/exceptions';
+import { TrackStorage } from 'src/track/storage/track.storage';
 import { UpdateArtistDto } from '../dto/update-artist.dto';
 import { ArtistEntity } from '../entities/artist.entity';
 
 @Injectable()
 export class ArtistStorage {
   private storage: ArtistEntity[] = [];
+
+  constructor(private trackStorage: TrackStorage) {}
 
   create(artist: ArtistEntity): void {
     this.storage.push(artist);
@@ -47,5 +50,6 @@ export class ArtistStorage {
     }
 
     this.storage = this.storage.filter((artist) => artist.id !== id);
+    this.trackStorage.deleteArtist(id);
   }
 }

@@ -6,5 +6,6 @@ import { TrackStorage } from './storage/track.storage';
 @Module({
   controllers: [TrackController],
   providers: [TrackService, TrackStorage],
+  exports: [TrackStorage],
 })
 export class TrackModule {}

@@ -1,11 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { NotFoundException } from '@nestjs/common/exceptions';
+import { TrackStorage } from 'src/track/storage/track.storage';
 import { UpdateAlbumDto } from '../dto/update-album.dto';
 import { AlbumEntity } from '../entities/album.entity';
 
 @Injectable()
 export class AlbumStorage {
   private storage: AlbumEntity[] = [];
+
+  constructor(private trackStorage: TrackStorage) {}
 
   create(album: AlbumEntity): void {
     this.storage.push(album);
@@ -47,5 +50,6 @@ export class AlbumStorage {
     }
 
     this.storage = this.storage.filter((album) => album.id !== id);
+    this.trackStorage.deleteAlbum(id);
   }
 }

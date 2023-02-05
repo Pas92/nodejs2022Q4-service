@@ -48,4 +48,22 @@ export class TrackStorage {
 
     this.storage = this.storage.filter((track) => track.id !== id);
   }
+
+  deleteArtist(id: string) {
+    this.storage = this.storage.map((track) => {
+      return {
+        ...track,
+        artistId: track.artistId === id ? null : track.artistId,
+      };
+    });
+  }
+
+  deleteAlbum(id: string) {
+    this.storage = this.storage.map((track) => {
+      return {
+        ...track,
+        albumId: track.albumId === id ? null : track.albumId,
+      };
+    });
+  }
 }
