@@ -1,4 +1,15 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Put,
+  Param,
+  Delete,
+  ParseUUIDPipe,
+  HttpCode,
+} from '@nestjs/common';
+import { dtoValidationPipe } from 'src/shared/validators/dto.validator';
 import { ArtistService } from './artist.service';
 import { CreateArtistDto } from './dto/create-artist.dto';
 import { UpdateArtistDto } from './dto/update-artist.dto';
@@ -18,17 +29,21 @@ export class ArtistController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.artistService.findOne(+id);
+  findOne(@Param('id', ParseUUIDPipe) id: string) {
+    return this.artistService.findOne(id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateArtistDto: UpdateArtistDto) {
-    return this.artistService.update(+id, updateArtistDto);
+  @Put(':id')
+  update(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() updateArtistDto: UpdateArtistDto,
+  ) {
+    return this.artistService.update(id, updateArtistDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.artistService.remove(+id);
+  // @HttpCode(204)
+  remove(@Param('id', ParseUUIDPipe) id: string) {
+    return this.artistService.remove(id);
   }
 }
