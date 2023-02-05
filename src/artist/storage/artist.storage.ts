@@ -20,7 +20,6 @@ export class ArtistStorage {
 
   findOne(id: string): ArtistEntity {
     const artist = this.storage.find((artist) => artist.id === id);
-    console.log(artist);
     if (artist === undefined) {
       throw new NotFoundException(`Artist with ID ${id} does not found`);
     }

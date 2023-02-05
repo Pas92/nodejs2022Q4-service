@@ -20,7 +20,6 @@ export class AlbumStorage {
 
   findOne(id: string): AlbumEntity {
     const album = this.storage.find((album) => album.id === id);
-    console.log(album);
     if (album === undefined) {
       throw new NotFoundException(`Album with ID ${id} does not found`);
     }

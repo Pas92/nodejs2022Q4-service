@@ -17,7 +17,6 @@ export class TrackStorage {
 
   findOne(id: string): TrackEntity {
     const track = this.storage.find((track) => track.id === id);
-    console.log(track);
     if (track === undefined) {
       throw new NotFoundException(`Track with ID ${id} does not found`);
     }
