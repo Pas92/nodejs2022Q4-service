@@ -52,8 +52,6 @@ export class FavStorage {
 
   addArtistToFav(id: string) {
     const artist = this.artistStorage.findOne(id, true);
-    console.log('Find artist from favs');
-    console.log(artist === undefined);
 
     if (artist === undefined) {
       throw new UnprocessableEntityException(

@@ -9,7 +9,6 @@ import {
   ParseUUIDPipe,
   HttpCode,
 } from '@nestjs/common';
-import { dtoValidationPipe } from 'src/shared/validators/dto.validator';
 import { AlbumService } from './album.service';
 import { CreateAlbumDto } from './dto/create-album.dto';
 import { UpdateAlbumDto } from './dto/update-album.dto';

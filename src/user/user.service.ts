@@ -20,7 +20,7 @@ export class UserService {
       version: 1,
     };
     this.storage.create(user);
-    const { password, ...returnedUser } = user;
+    const { password, ...returnedUser } = user; // eslint-disable-line
 
     return returnedUser;
   }

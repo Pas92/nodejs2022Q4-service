@@ -24,8 +24,8 @@ export class dtoValidationPipe implements PipeTransform<any> {
     return value;
   }
 
-  private toValidate(metatype: Function): boolean {
-    const types: Function[] = [String, Boolean, Number, Array, Object];
+  private toValidate(metatype: unknown): boolean {
+    const types: unknown[] = [String, Boolean, Number, Array, Object];
     return !types.includes(metatype);
   }
 }

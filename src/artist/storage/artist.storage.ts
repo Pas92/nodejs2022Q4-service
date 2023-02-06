@@ -1,5 +1,5 @@
-import { HttpStatus, Injectable } from '@nestjs/common';
-import { HttpException, NotFoundException } from '@nestjs/common/exceptions';
+import { Injectable } from '@nestjs/common';
+import { NotFoundException } from '@nestjs/common/exceptions';
 import { TrackStorage } from 'src/track/storage/track.storage';
 import { UpdateArtistDto } from '../dto/update-artist.dto';
 import { ArtistEntity } from '../entities/artist.entity';
@@ -18,7 +18,7 @@ export class ArtistStorage {
     return this.storage;
   }
 
-  findOne(id: string, isFavsSearch: boolean = false): ArtistEntity {
+  findOne(id: string, isFavsSearch = false): ArtistEntity {
     const artist = this.storage.find((artist) => artist.id === id);
     if (artist === undefined && !isFavsSearch) {
       throw new NotFoundException(`Artist with ID ${id} does not found`);

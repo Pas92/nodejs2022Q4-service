@@ -32,7 +32,7 @@ export class UserStorage {
     const user = this.storage.find((user) => user.id === id);
 
     if (user === undefined) {
-      throw new ForbiddenException(`User with ID ${id} does not found`);
+      throw new NotFoundException(`User with ID ${id} does not found`);
     }
 
     if (user.password !== updateUserDto.oldPassword) {
@@ -44,7 +44,8 @@ export class UserStorage {
     user.updatedAt = new Date().getTime();
     user.version = user.version + 1;
     this.storage.push(user);
-    const { password, ...returnedUser } = user;
+
+    const { password, ...returnedUser } = user; // eslint-disable-line
 
     return returnedUser;
   }

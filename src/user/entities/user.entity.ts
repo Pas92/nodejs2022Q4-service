@@ -9,7 +9,7 @@ export class UserEntity implements User {
   @IsString()
   login: string;
 
-  @MinLength(8)
+  @MinLength(3)
   password: string;
 
   @IsInt()
