@@ -9,8 +9,20 @@ import { FavsModule } from './favs/favs.module';
 import { APP_PIPE } from '@nestjs/core';
 import { dtoValidationPipe } from './shared/validators/dto.validator';
 
+import { ConfigModule } from '@nestjs/config';
+import config from './config';
+
 @Module({
-  imports: [UserModule, AlbumModule, TrackModule, ArtistModule, FavsModule],
+  imports: [
+    ConfigModule.forRoot({
+      load: [config],
+    }),
+    UserModule,
+    AlbumModule,
+    TrackModule,
+    ArtistModule,
+    FavsModule,
+  ],
   controllers: [AppController],
   providers: [
     AppService,
