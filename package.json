@@ -10,6 +10,7 @@
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
+    "start:n": "nodemon --config nodemon.json -L",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
@@ -18,7 +19,9 @@
     "test:auth": "cross-env TEST_MODE=auth jest --config ./test/jest-e2e.json",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
-    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand"
+    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
+    "docker:newdisk": "wsl --unregister docker-desktop-data",
+    "docker:clean": "docker container prune -f && docker image prune -f && docker volume prune -f && docker system prune -f"
   },
   "dependencies": {
     "@nestjs/common": "^9.3.2",
@@ -56,6 +59,7 @@
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
     "jest": "^27.2.5",
+    "nodemon": "^2.0.20",
     "prettier": "^2.3.2",
     "source-map-support": "^0.5.20",
     "supertest": "^6.2.3",
