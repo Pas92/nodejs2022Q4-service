@@ -11,11 +11,17 @@ import { dtoValidationPipe } from './shared/validators/dto.validator';
 
 import { ConfigModule } from '@nestjs/config';
 import config from './config';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { TypeORMConfig } from './typeorm-config';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       load: [config],
+      isGlobal: true,
+    }),
+    TypeOrmModule.forRootAsync({
+      useClass: TypeORMConfig,
     }),
     UserModule,
     AlbumModule,

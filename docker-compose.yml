@@ -4,10 +4,11 @@ services:
     build: .
     env_file:
       - .env
+    container_name: homelib
     ports:
       - ${PORT}:${PORT}
-    # depends_on:
-    #   - postgres
+    depends_on:
+      - postgres
     environment:
       - PORT=${PORT}
     volumes:
@@ -19,20 +20,38 @@ services:
       - app-network
 
   postgres:
-    build: ./db
+    image: postgres
     env_file:
       - .env
     ports:
-     - ${POSTGRES_PORT}:${POSTGRES_PORT}
+      - ${POSTGRES_PORT}:${POSTGRES_PORT}
+    container_name: homelib_pg
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_HOST: ${POSTGRES_HOST}
     restart: on-failure
-    volumes:     
-     - dbdata:/usr/app/db
+    volumes:
+      - .:/docker-entrypoint-initdb.d
+      - dbdata:/var/lib/postgresql/data
     networks:
-     - app-network
+      - app-network
+
+  pgadmin:
+    image: dpage/pgadmin4:6.18
+    networks:
+      - app-network
+    ports:
+      - '8080:80'
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+    env_file:
+      - .env
+    environment:
+      - PGADMIN_CONFIG_SERVER_MODE=False
+    logging:
+      driver: none
 
 networks:
   app-network:
@@ -40,4 +59,8 @@ networks:
 
 volumes:
   dbdata:
-  node_modules: 
+  node:
+  pgadmin:
+  logging:
+    driver: none
+  pgadmin-data:

@@ -6,9 +6,13 @@ import { UserStorage } from './storage/user.storage';
 import { FindUserDTO } from './dto/find-user.dto';
 
 import { v4 as uuidv4 } from 'uuid';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class UserService {
+  @InjectRepository(UserEntity)
+  private readonly repository: Repository<UserEntity>;
   constructor(private storage: UserStorage) {}
 
   create(createUserDto: CreateUserDto): FindUserDTO {
@@ -25,8 +29,9 @@ export class UserService {
     return returnedUser;
   }
 
-  findAll(): FindUserDTO[] {
-    return this.storage.findAll();
+  async findAll(): Promise<FindUserDTO[]> {
+    return (await this.repository.find()).map(this.deletePassword);
+    // return this.storage.findAll();
   }
 
   findOne(id: string): FindUserDTO {
@@ -39,5 +44,10 @@ export class UserService {
 
   remove(id: string) {
     return this.storage.remove(id);
+  }
+
+  private deletePassword(user: UserEntity): FindUserDTO {
+    const { password, ...returnedUser } = user; // eslint-disable-line
+    return returnedUser;
   }
 }
