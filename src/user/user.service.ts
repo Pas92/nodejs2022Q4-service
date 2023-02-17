@@ -15,7 +15,7 @@ export class UserService {
   private readonly repository: Repository<UserEntity>;
   constructor(private storage: UserStorage) {}
 
-  create(createUserDto: CreateUserDto): FindUserDTO {
+  async create(createUserDto: CreateUserDto): Promise<FindUserDTO> {
     const user: UserEntity = {
       ...createUserDto,
       id: uuidv4(),
@@ -23,9 +23,12 @@ export class UserService {
       updatedAt: new Date().getTime(),
       version: 1,
     };
-    this.storage.create(user);
-    const { password, ...returnedUser } = user; // eslint-disable-line
+    // this.storage.create(user);
 
+    console.log(user);
+
+    const newUser = await this.repository.save(user);
+    const { password, ...returnedUser } = newUser; // eslint-disable-line
     return returnedUser;
   }
 

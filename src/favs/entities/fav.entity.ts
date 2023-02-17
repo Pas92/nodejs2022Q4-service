@@ -1,4 +1,5 @@
 import { IsUUID } from 'class-validator';
+import { Entity } from 'typeorm';
 import { Favorites } from '../interfaces/fav.interface';
 
 export class FavEntity implements Favorites {

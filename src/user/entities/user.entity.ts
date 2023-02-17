@@ -16,18 +16,21 @@ export class UserEntity implements User {
 
   @Column()
   @MinLength(3)
-  @Exclude()
   password: string;
 
   @Column()
   @IsInt()
   version: number;
 
-  @Column()
+  @Column({
+    type: 'datetime',
+  })
   @IsDate()
   createdAt: number;
 
-  @Column()
+  @Column({
+    type: 'datetime',
+  })
   @IsDate()
   updatedAt: number;
 }

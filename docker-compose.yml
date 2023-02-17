@@ -20,7 +20,7 @@ services:
       - app-network
 
   postgres:
-    image: postgres
+    build: ./db
     env_file:
       - .env
     ports:

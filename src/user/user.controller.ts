@@ -46,8 +46,9 @@ export class UserController {
     status: 400,
     description: 'Bad request. body does not contain required fields',
   })
-  create(@Body() createUserDto: CreateUserDto) {
-    return this.userService.create(createUserDto);
+  async create(@Body() createUserDto: CreateUserDto) {
+    console.log(createUserDto);
+    return await this.userService.create(createUserDto);
   }
 
   @Put(':id')

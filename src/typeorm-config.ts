@@ -16,8 +16,8 @@ export class TypeORMConfig implements TypeOrmOptionsFactory {
       username: this.envConfig.get('POSTGRES_USER'),
       password: this.envConfig.get('POSTGRES_PASSWORD'),
       entities: ['dist/**/*.entity.{ts,js}'],
-      migrations: ['dist/**/migrations/*.{ts,js}'],
-      migrationsTableName: 'typeorm_migrations',
+      migrations: ['dist/**/migration/*.{ts,js}'],
+      migrationsRun: true,
       synchronize: false,
     };
   }
