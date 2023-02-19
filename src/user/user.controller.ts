@@ -22,7 +22,7 @@ export class UserController {
   @Get()
   @ApiOperation({ summary: 'Get all users', description: 'Get all users' })
   async findAll() {
-    console.log('Hi');
+    console.log('Hi man');
     return await this.userService.findAll();
   }
 
@@ -36,8 +36,8 @@ export class UserController {
     status: 404,
     description: 'User not found',
   })
-  findOne(@Param('id', ParseUUIDPipe) id: string) {
-    return this.userService.findOne(id);
+  async indOne(@Param('id', ParseUUIDPipe) id: string) {
+    return await this.userService.findOne(id);
   }
 
   @Post()
@@ -90,7 +90,7 @@ export class UserController {
     description: 'User not found',
   })
   @HttpCode(204)
-  remove(@Param('id', ParseUUIDPipe) id: string) {
-    return this.userService.remove(id);
+  async remove(@Param('id', ParseUUIDPipe) id: string) {
+    return await this.userService.remove(id);
   }
 }

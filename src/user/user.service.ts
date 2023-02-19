@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserEntity } from './entities/user.entity';
@@ -19,11 +19,8 @@ export class UserService {
     const user: UserEntity = {
       ...createUserDto,
       id: uuidv4(),
-      createdAt: new Date().getTime(),
-      updatedAt: new Date().getTime(),
       version: 1,
     };
-    // this.storage.create(user);
 
     console.log(user);
 
@@ -34,19 +31,34 @@ export class UserService {
 
   async findAll(): Promise<FindUserDTO[]> {
     return (await this.repository.find()).map(this.deletePassword);
-    // return this.storage.findAll();
   }
 
-  findOne(id: string): FindUserDTO {
-    return this.storage.findOne(id);
+  async findOne(id: string): Promise<FindUserDTO> {
+    const user = await this.repository.findOneBy({ id: id });
+
+    if (user === null) {
+      throw new NotFoundException(`User with ID ${id} does not found`);
+    }
+
+    const { password, ...returnedUser } = user; // eslint-disable-line
+
+    return returnedUser;
   }
 
   update(id: string, updateUserDto: UpdateUserDto): FindUserDTO {
     return this.storage.update(id, updateUserDto);
   }
 
-  remove(id: string) {
-    return this.storage.remove(id);
+  async remove(id: string) {
+    const user = await this.repository.findOneBy({ id: id });
+    console.log(user);
+
+    if (user === null) {
+      throw new NotFoundException(`User with ID ${id} does not found`);
+    }
+
+    this.repository.delete(id);
+    // return this.storage.remove(id);
   }
 
   private deletePassword(user: UserEntity): FindUserDTO {

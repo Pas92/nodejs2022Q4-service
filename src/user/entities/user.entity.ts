@@ -1,6 +1,11 @@
-import { Exclude } from 'class-transformer';
 import { IsDate, IsInt, IsString, IsUUID, MinLength } from 'class-validator';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
 import { User } from '../interfaces/user.interface';
 
@@ -22,15 +27,11 @@ export class UserEntity implements User {
   @IsInt()
   version: number;
 
-  @Column({
-    type: 'datetime',
-  })
+  @CreateDateColumn()
   @IsDate()
-  createdAt: number;
+  createdAt?: Date;
 
-  @Column({
-    type: 'datetime',
-  })
+  @UpdateDateColumn()
   @IsDate()
-  updatedAt: number;
+  updatedAt?: Date;
 }

@@ -41,7 +41,7 @@ export class UserStorage {
 
     this.storage = this.storage.filter((user) => user.id !== id);
     user.password = updateUserDto.newPassword;
-    user.updatedAt = new Date().getTime();
+    // user.updatedAt = new Date().getTime();
     user.version = user.version + 1;
     this.storage.push(user);
 
