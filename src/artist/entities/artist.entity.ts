@@ -1,5 +1,7 @@
+import { Exclude } from 'class-transformer';
 import { IsUUID, IsString, IsBoolean } from 'class-validator';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { AlbumEntity } from 'src/album/entities/album.entity';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Artist } from '../interfaces/artist.interface';
 
 @Entity()
@@ -15,4 +17,8 @@ export class ArtistEntity implements Artist {
   @Column()
   @IsBoolean()
   grammy: boolean;
+
+  @Exclude({ toPlainOnly: true })
+  @OneToMany((type) => AlbumEntity, (album) => album.artistId)
+  albumIds: string[];
 }

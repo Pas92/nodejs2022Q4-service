@@ -1,34 +1,75 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateAlbumDto } from './dto/create-album.dto';
 import { UpdateAlbumDto } from './dto/update-album.dto';
 import { AlbumEntity } from './entities/album.entity';
 import { AlbumStorage } from './storage/album.storage';
 
 import { v4 as uuidv4 } from 'uuid';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { ArtistEntity } from 'src/artist/entities/artist.entity';
 
 @Injectable()
 export class AlbumService {
+  @InjectRepository(AlbumEntity)
+  private readonly repository: Repository<AlbumEntity>;
   constructor(private storage: AlbumStorage) {}
 
-  create(createAlbumDto: CreateAlbumDto): AlbumEntity {
+  async create(createAlbumDto: CreateAlbumDto): Promise<AlbumEntity> {
     const album: AlbumEntity = { ...createAlbumDto, id: uuidv4() };
-    this.storage.create(album);
+    return await this.repository.save(album);
+  }
+
+  async findAll(): Promise<AlbumEntity[]> {
+    return await this.repository.find();
+  }
+
+  async findOne(id: string): Promise<AlbumEntity> {
+    const album = await this.repository.findOneBy({ id: id });
+    if (album === null) {
+      throw new NotFoundException(`Album with ID ${id} does not found`);
+    }
     return album;
   }
 
-  findAll(): AlbumEntity[] {
-    return this.storage.findAll();
+  async update(
+    id: string,
+    updateAlbumDto: UpdateAlbumDto,
+  ): Promise<AlbumEntity> {
+    const album = await this.repository.findOneBy({ id: id });
+    if (album === null) {
+      throw new NotFoundException(`Album with ID ${id} does not found`);
+    }
+
+    await this.repository.update(id, updateAlbumDto);
+
+    // return await this.repository.findOneBy({ id: id });
+
+    const updatedUser = await this.repository.findOne({
+      where: {
+        id: id,
+      },
+      // select: {
+      //   id: true,
+      //   artistId: true,
+      //   name: true,
+      //   year: true,
+      // },
+      relations: ['artistId'],
+    });
+
+    return {
+      ...updatedUser,
+      artistId: (updatedUser.artistId as ArtistEntity).id,
+    };
   }
 
-  findOne(id: string): AlbumEntity {
-    return this.storage.findOne(id);
-  }
+  async remove(id: string) {
+    const album = await this.repository.findOneBy({ id: id });
+    if (album === null) {
+      throw new NotFoundException(`Artist with ID ${id} does not found`);
+    }
 
-  update(id: string, updateAlbumDto: UpdateAlbumDto): AlbumEntity {
-    return this.storage.update(id, updateAlbumDto);
-  }
-
-  remove(id: string) {
-    return this.storage.remove(id);
+    await this.repository.delete(id);
   }
 }
