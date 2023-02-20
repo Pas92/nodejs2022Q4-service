@@ -24,8 +24,8 @@ export class ArtistController {
     summary: 'Get artists list',
     description: 'Gets all library artists list',
   })
-  findAll() {
-    return this.artistService.findAll();
+  async findAll() {
+    return await this.artistService.findAll();
   }
 
   @Get(':id')
@@ -41,8 +41,8 @@ export class ArtistController {
     status: 404,
     description: 'Artist not found',
   })
-  findOne(@Param('id', ParseUUIDPipe) id: string) {
-    return this.artistService.findOne(id);
+  async findOne(@Param('id', ParseUUIDPipe) id: string) {
+    return await this.artistService.findOne(id);
   }
 
   @Post()
@@ -54,8 +54,8 @@ export class ArtistController {
     status: 400,
     description: 'Bad request. body does not contain required fields',
   })
-  create(@Body() createArtistDto: CreateArtistDto) {
-    return this.artistService.create(createArtistDto);
+  async create(@Body() createArtistDto: CreateArtistDto) {
+    return await this.artistService.create(createArtistDto);
   }
 
   @Put(':id')
@@ -71,11 +71,11 @@ export class ArtistController {
     status: 404,
     description: 'Artist not found',
   })
-  update(
+  async update(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updateArtistDto: UpdateArtistDto,
   ) {
-    return this.artistService.update(id, updateArtistDto);
+    return await this.artistService.update(id, updateArtistDto);
   }
 
   @Delete(':id')
@@ -96,7 +96,7 @@ export class ArtistController {
     status: 404,
     description: 'Artist not found',
   })
-  remove(@Param('id', ParseUUIDPipe) id: string) {
-    return this.artistService.remove(id);
+  async remove(@Param('id', ParseUUIDPipe) id: string) {
+    return await this.artistService.remove(id);
   }
 }

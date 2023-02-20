@@ -23,8 +23,8 @@
     "docker:newdisk": "wsl --unregister docker-desktop-data",
     "docker:up": "docker-compose up --no-attach pgadmin",
     "typeorm": "npx typeorm-ts-node-esm -d ./src/typeorm-obj-config.ts",
-    "typeorm:create": "npx typeorm-ts-node-esm -- migration:create ./src/migration/user",
-    "typeorm:generate": "npm run typeorm -- migration:generate ./src/migration/user ",
+    "typeorm:create": "npx typeorm-ts-node-esm -- migration:create ./src/migration/homelib_tables",
+    "typeorm:generate": "npm run typeorm -- migration:generate ./src/migration/homelib_tables",
     "typeorm:run": "npm run typeorm -- migration:run"
   },
   "dependencies": {
