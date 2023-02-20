@@ -29,9 +29,9 @@ export class UserEntity implements User {
 
   @CreateDateColumn()
   @IsDate()
-  createdAt?: Date;
+  createdAt?: Date | number;
 
   @UpdateDateColumn()
   @IsDate()
-  updatedAt?: Date;
+  updatedAt?: Date | number;
 }

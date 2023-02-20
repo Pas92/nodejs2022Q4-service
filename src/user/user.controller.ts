@@ -22,7 +22,6 @@ export class UserController {
   @Get()
   @ApiOperation({ summary: 'Get all users', description: 'Get all users' })
   async findAll() {
-    console.log('Hi man');
     return await this.userService.findAll();
   }
 
@@ -47,7 +46,6 @@ export class UserController {
     description: 'Bad request. body does not contain required fields',
   })
   async create(@Body() createUserDto: CreateUserDto) {
-    console.log(createUserDto);
     return await this.userService.create(createUserDto);
   }
 
@@ -68,11 +66,11 @@ export class UserController {
     status: 404,
     description: 'User not found',
   })
-  update(
+  async update(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updateUserDto: UpdateUserDto,
   ) {
-    return this.userService.update(id, updateUserDto);
+    return await this.userService.update(id, updateUserDto);
   }
 
   @Delete(':id')
