@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { NotFoundException } from '@nestjs/common/exceptions';
 import { UpdateTrackDto } from '../dto/update-track.dto';
-import { TrackEntity } from '../entities/track.entity';
+import TrackEntity from '../entities/track.entity';
 
 @Injectable()
 export class TrackStorage {

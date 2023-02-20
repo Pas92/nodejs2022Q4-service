@@ -29,6 +29,7 @@ export class AlbumService {
     if (album === null) {
       throw new NotFoundException(`Album with ID ${id} does not found`);
     }
+    console.log(album);
     return album;
   }
 
@@ -67,7 +68,7 @@ export class AlbumService {
   async remove(id: string) {
     const album = await this.repository.findOneBy({ id: id });
     if (album === null) {
-      throw new NotFoundException(`Artist with ID ${id} does not found`);
+      throw new NotFoundException(`Album with ID ${id} does not found`);
     }
 
     await this.repository.delete(id);

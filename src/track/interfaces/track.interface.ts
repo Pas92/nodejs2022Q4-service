@@ -1,7 +1,10 @@
+import { AlbumEntity } from 'src/album/entities/album.entity';
+import { ArtistEntity } from 'src/artist/entities/artist.entity';
+
 export interface Track {
   id: string; // uuid v4
   name: string;
-  artistId: string | null; // refers to Artist
-  albumId: string | null; // refers to Album
+  artistId: string | null | ArtistEntity; // refers to Artist
+  albumId: string | null | AlbumEntity; // refers to Album
   duration: number; // integer number
 }

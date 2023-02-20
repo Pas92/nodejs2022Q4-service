@@ -24,8 +24,8 @@ export class TrackController {
     summary: 'Get tracks list',
     description: 'Gets all library tracks list',
   })
-  findAll() {
-    return this.trackService.findAll();
+  async findAll() {
+    return await this.trackService.findAll();
   }
 
   @Get(':id')
@@ -41,8 +41,8 @@ export class TrackController {
     status: 404,
     description: 'Track not found',
   })
-  findOne(@Param('id', ParseUUIDPipe) id: string) {
-    return this.trackService.findOne(id);
+  async findOne(@Param('id', ParseUUIDPipe) id: string) {
+    return await this.trackService.findOne(id);
   }
 
   @Post()
@@ -54,8 +54,8 @@ export class TrackController {
     status: 400,
     description: 'Bad request. body does not contain required fields',
   })
-  create(@Body() createTrackDto: CreateTrackDto) {
-    return this.trackService.create(createTrackDto);
+  async create(@Body() createTrackDto: CreateTrackDto) {
+    return await this.trackService.create(createTrackDto);
   }
 
   @Put(':id')
@@ -71,11 +71,11 @@ export class TrackController {
     status: 404,
     description: 'Track not found',
   })
-  update(
+  async update(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updateTrackDto: UpdateTrackDto,
   ) {
-    return this.trackService.update(id, updateTrackDto);
+    return await this.trackService.update(id, updateTrackDto);
   }
 
   @Delete(':id')
@@ -96,7 +96,7 @@ export class TrackController {
     status: 404,
     description: 'Track not found',
   })
-  remove(@Param('id', ParseUUIDPipe) id: string) {
-    return this.trackService.remove(id);
+  async remove(@Param('id', ParseUUIDPipe) id: string) {
+    return await this.trackService.remove(id);
   }
 }

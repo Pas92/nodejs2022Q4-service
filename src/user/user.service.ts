@@ -58,16 +58,12 @@ export class UserService {
       throw new ForbiddenException('Wrong password');
     }
 
-    console.log(user);
-
     await this.repository.update(id, {
       password: updateUserDto.newPassword,
       version: user.version + 1,
     });
 
     const updatedUser = await this.repository.findOneBy({ id: id });
-
-    console.log(updatedUser);
 
     const { password, ...returnedUser } = updatedUser; // eslint-disable-line
 
