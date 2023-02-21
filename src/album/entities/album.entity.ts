@@ -1,11 +1,19 @@
 import { Exclude } from 'class-transformer';
-import { IsUUID, IsInt, IsString, IsOptional } from 'class-validator';
+import {
+  IsUUID,
+  IsInt,
+  IsString,
+  IsOptional,
+  IsBoolean,
+} from 'class-validator';
 import { ArtistEntity } from 'src/artist/entities/artist.entity';
+import { FavEntity } from 'src/favs/entities/fav.entity';
 import TrackEntity from 'src/track/entities/track.entity';
 import {
   Column,
   Entity,
   JoinColumn,
+  JoinTable,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
@@ -26,7 +34,9 @@ export class AlbumEntity implements Album {
   @IsInt()
   year: number;
 
-  @ManyToOne((type) => ArtistEntity, (artist) => artist.albumIds)
+  @ManyToOne((type) => ArtistEntity, (artist) => artist.albumIds, {
+    onDelete: 'SET NULL',
+  })
   @JoinColumn({
     name: 'artistId',
     referencedColumnName: 'id',
@@ -38,4 +48,18 @@ export class AlbumEntity implements Album {
   @Exclude({ toPlainOnly: true })
   @OneToMany((type) => TrackEntity, (track) => track.albumId)
   trackIds: string[];
+
+  @Exclude()
+  @Column({
+    nullable: true,
+  })
+  // @ManyToOne((type) => FavEntity, (favs) => favs.albumsArr)
+  // @JoinTable()
+  @IsBoolean()
+  @IsOptional()
+  isFavorite: boolean;
+
+  constructor(partial: Partial<AlbumEntity>) {
+    Object.assign(this, partial);
+  }
 }

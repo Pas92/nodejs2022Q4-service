@@ -1,6 +1,14 @@
-import { IsUUID, IsString, IsInt, IsOptional } from 'class-validator';
+import { Exclude } from 'class-transformer';
+import {
+  IsUUID,
+  IsString,
+  IsInt,
+  IsOptional,
+  IsBoolean,
+} from 'class-validator';
 import { AlbumEntity } from 'src/album/entities/album.entity';
 import { ArtistEntity } from 'src/artist/entities/artist.entity';
+import { FavEntity } from 'src/favs/entities/fav.entity';
 import {
   Column,
   Entity,
@@ -43,4 +51,18 @@ export default class TrackEntity implements Track {
   @Column()
   @IsInt()
   duration: number; // integer number
+
+  @Exclude({ toPlainOnly: true })
+  @Column({
+    nullable: true,
+  })
+  // @ManyToOne((type) => FavEntity, (favs) => favs.tracksArr)
+  // @JoinTable()
+  @IsBoolean()
+  @IsOptional()
+  isFavorite: boolean;
+
+  constructor(partial: Partial<TrackEntity>) {
+    Object.assign(this, partial);
+  }
 }

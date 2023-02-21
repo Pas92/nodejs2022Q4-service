@@ -22,6 +22,7 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "docker:newdisk": "wsl --unregister docker-desktop-data",
     "docker:up": "docker-compose up --no-attach pgadmin",
+    "docker:scan": "docker scan nodejs2022q4-service-node",
     "typeorm": "npx typeorm-ts-node-esm -d ./src/typeorm-obj-config.ts",
     "typeorm:create": "npx typeorm-ts-node-esm -- migration:create ./src/migration/homelib_tables",
     "typeorm:generate": "npm run typeorm -- migration:generate ./src/migration/homelib_tables",

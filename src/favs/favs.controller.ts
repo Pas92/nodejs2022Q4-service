@@ -20,8 +20,8 @@ export class FavsController {
     summary: 'Get all favorites',
     description: 'Gets all favorites artists, albums and tracks',
   })
-  findAll() {
-    return this.favsService.findAll();
+  async findAll() {
+    return await this.favsService.findAll();
   }
 
   @Post('/album/:id')
