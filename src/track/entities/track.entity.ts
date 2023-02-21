@@ -8,7 +8,6 @@ import {
 } from 'class-validator';
 import { AlbumEntity } from 'src/album/entities/album.entity';
 import { ArtistEntity } from 'src/artist/entities/artist.entity';
-import { FavEntity } from 'src/favs/entities/fav.entity';
 import {
   Column,
   Entity,

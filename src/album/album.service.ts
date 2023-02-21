@@ -2,7 +2,6 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateAlbumDto } from './dto/create-album.dto';
 import { UpdateAlbumDto } from './dto/update-album.dto';
 import { AlbumEntity } from './entities/album.entity';
-import { AlbumStorage } from './storage/album.storage';
 
 import { v4 as uuidv4 } from 'uuid';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -13,7 +12,6 @@ import { ArtistEntity } from 'src/artist/entities/artist.entity';
 export class AlbumService {
   @InjectRepository(AlbumEntity)
   private readonly repository: Repository<AlbumEntity>;
-  constructor(private storage: AlbumStorage) {}
 
   async create(createAlbumDto: CreateAlbumDto): Promise<AlbumEntity> {
     const album: AlbumEntity = { ...createAlbumDto, id: uuidv4() };
@@ -29,7 +27,6 @@ export class AlbumService {
     if (album === null) {
       throw new NotFoundException(`Album with ID ${id} does not found`);
     }
-    console.log(album);
     return album;
   }
 
@@ -44,18 +41,10 @@ export class AlbumService {
 
     await this.repository.update(id, updateAlbumDto);
 
-    // return await this.repository.findOneBy({ id: id });
-
     const updatedUser = await this.repository.findOne({
       where: {
         id: id,
       },
-      // select: {
-      //   id: true,
-      //   artistId: true,
-      //   name: true,
-      //   year: true,
-      // },
       relations: ['artistId'],
     });
 

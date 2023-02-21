@@ -2,7 +2,6 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateTrackDto } from './dto/create-track.dto';
 import { UpdateTrackDto } from './dto/update-track.dto';
 import TrackEntity from './entities/track.entity';
-import { TrackStorage } from './storage/track.storage';
 
 import { v4 as uuidv4 } from 'uuid';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -14,7 +13,6 @@ import { AlbumEntity } from 'src/album/entities/album.entity';
 export class TrackService {
   @InjectRepository(TrackEntity)
   private readonly repository: Repository<TrackEntity>;
-  constructor(private storage: TrackStorage) {}
 
   async create(createTrackDto: CreateTrackDto): Promise<TrackEntity> {
     const track: TrackEntity = { ...createTrackDto, id: uuidv4() };
@@ -36,7 +34,6 @@ export class TrackService {
       throw new NotFoundException(`Track with ID ${id} does not found`);
     }
 
-    console.log(track);
     return {
       ...track,
       artistId: (track.artistId as ArtistEntity)?.id || null,

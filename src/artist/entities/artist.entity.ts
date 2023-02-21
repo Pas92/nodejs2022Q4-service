@@ -1,17 +1,8 @@
 import { Exclude } from 'class-transformer';
 import { IsUUID, IsString, IsBoolean, IsOptional } from 'class-validator';
 import { AlbumEntity } from 'src/album/entities/album.entity';
-import { FavEntity } from 'src/favs/entities/fav.entity';
 import TrackEntity from 'src/track/entities/track.entity';
-import {
-  Column,
-  Entity,
-  JoinColumn,
-  JoinTable,
-  ManyToOne,
-  OneToMany,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Artist } from '../interfaces/artist.interface';
 
 @Entity()

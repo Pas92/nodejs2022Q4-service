@@ -2,7 +2,6 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateArtistDto } from './dto/create-artist.dto';
 import { UpdateArtistDto } from './dto/update-artist.dto';
 import { ArtistEntity } from './entities/artist.entity';
-import { ArtistStorage } from './storage/artist.storage';
 
 import { v4 as uuidv4 } from 'uuid';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -12,7 +11,6 @@ import { Repository } from 'typeorm';
 export class ArtistService {
   @InjectRepository(ArtistEntity)
   private readonly repository: Repository<ArtistEntity>;
-  constructor(private storage: ArtistStorage) {}
 
   async create(createArtistDto: CreateArtistDto): Promise<ArtistEntity> {
     const artist: ArtistEntity = { ...createArtistDto, id: uuidv4() };

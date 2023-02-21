@@ -4,7 +4,6 @@ import { AlbumEntity } from 'src/album/entities/album.entity';
 import { ArtistEntity } from 'src/artist/entities/artist.entity';
 import TrackEntity from 'src/track/entities/track.entity';
 import { Repository } from 'typeorm';
-import { FavStorage } from './storage/favs.storage';
 
 @Injectable()
 export class FavsService {
@@ -16,8 +15,6 @@ export class FavsService {
 
   @InjectRepository(TrackEntity)
   private readonly tracksRepo: Repository<TrackEntity>;
-
-  constructor(private storage: FavStorage) {}
 
   async findAll() {
     const albums: AlbumEntity[] = (

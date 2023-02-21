@@ -7,13 +7,11 @@ import {
   IsBoolean,
 } from 'class-validator';
 import { ArtistEntity } from 'src/artist/entities/artist.entity';
-import { FavEntity } from 'src/favs/entities/fav.entity';
 import TrackEntity from 'src/track/entities/track.entity';
 import {
   Column,
   Entity,
   JoinColumn,
-  JoinTable,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
