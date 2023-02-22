@@ -17,7 +17,43 @@ git clone {repository URL}
 npm install
 ```
 
-## Running application
+## Running application with Docker
+
+Change filename '.env.example' to '.env'
+
+Run application
+
+```
+npm run docker:up
+```
+After starting the app on port (5000 as default, you can set the PORT in '.env' file) you can open
+in your browser OpenAPI documentation by typing
+
+```
+http://localhost:5000/api
+```
+
+It's also possible to use pgAdmin in your browser by typing
+
+```
+http://localhost:8080
+```
+
+Connection settings:
+ - Host name: `homelib_pg`
+ - Port: `5432`
+ - Maintenance database: `home-library`
+ - Username: `root`
+ - Password: `pass`
+
+
+Check image for vulnerabilities
+
+```
+npm run docker:scan
+```
+
+## Running application without Docker
 
 Change filename '.env.example' to '.env'
 
