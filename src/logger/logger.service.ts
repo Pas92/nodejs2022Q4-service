@@ -28,6 +28,7 @@ export class AppLogger extends Logger {
    */
   error(message: any, ...optionalParams: any[]) {
     console.log('ERROR_LOGGER');
+    super.error(message, ...optionalParams);
   }
 
   /**
@@ -35,6 +36,7 @@ export class AppLogger extends Logger {
    */
   warn(message: any, ...optionalParams: any[]) {
     console.log('WARN_LOGGER');
+    super.warn(message, ...optionalParams);
   }
 
   /**
@@ -42,6 +44,7 @@ export class AppLogger extends Logger {
    */
   debug(message: any, ...optionalParams: any[]) {
     console.log('DEBUG_LOGGER');
+    super.debug(message, ...optionalParams);
   }
 
   /**
@@ -49,5 +52,6 @@ export class AppLogger extends Logger {
    */
   verbose(message: any, ...optionalParams: any[]) {
     console.log('VERBOSE_LOGGER');
+    super.verbose(message, ...optionalParams);
   }
 }
