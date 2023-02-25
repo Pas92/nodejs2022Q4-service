@@ -1,0 +1,65 @@
+version: '3.7'
+services:
+  node:
+    build: .
+    env_file:
+      - .env
+    container_name: homelib
+    ports:
+      - ${PORT}:${PORT}
+    depends_on:
+      - postgres
+    environment:
+      - PORT=${PORT}
+    volumes:
+      - .:/usr/app
+      - /usr/app/node_modules
+    command: npm run start:n
+    restart: always
+    networks:
+      - app-network
+
+  postgres:
+    build: ./db
+    env_file:
+      - .env
+    ports:
+      - ${POSTGRES_PORT}:${POSTGRES_PORT}
+    container_name: homelib_pg
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_HOST: ${POSTGRES_HOST}
+    restart: always
+    volumes:
+      - .:/docker-entrypoint-initdb.d
+      - dbdata:/var/lib/postgresql/data
+    networks:
+      - app-network
+
+  pgadmin:
+    image: dpage/pgadmin4:6.18
+    networks:
+      - app-network
+    ports:
+      - '8080:80'
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+    env_file:
+      - .env
+    environment:
+      - PGADMIN_CONFIG_SERVER_MODE=False
+    logging:
+      driver: none
+    restart: always
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  dbdata:
+  node:
+  pgadmin:
+  pgadmin-data:
