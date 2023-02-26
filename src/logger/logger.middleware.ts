@@ -13,7 +13,7 @@ export class LoggerMiddleware implements NestMiddleware {
         `Query params: ${JSON.stringify(req.query)}`,
         `Request Body: ${JSON.stringify(req.body)}`,
         `Response Status: ${res.statusCode}`,
-        `Response Message: ${res.statusMessage}\n`,
+        `Response Message: ${res.statusMessage}`,
         `HTTP`,
       );
     });

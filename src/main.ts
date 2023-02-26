@@ -28,6 +28,19 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, swaggerConfig);
   SwaggerModule.setup('api', app, document);
 
+  //Exceptions
+  process.on('uncaughtExceptionMonitor', (err) => {
+    logger.error('Uncaught Exception', err.message, err.stack, err.name);
+
+    process.exit(1);
+  });
+
+  process.on('unhandledRejection', (reason, promise) => {
+    logger.error('Uncaught Rejection', reason, promise, 'Uncaught Rejection');
+
+    process.exit(1);
+  });
+
   await app.listen(port, '0.0.0.0');
 }
 bootstrap();
