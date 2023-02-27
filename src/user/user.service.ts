@@ -47,6 +47,20 @@ export class UserService {
     return this.convertDate(returnedUser);
   }
 
+  async findOneByLogin(username: string): Promise<UserEntity> {
+    const user = await this.repository.findOneBy({ login: username });
+
+    if (user === null) {
+      throw new NotFoundException(
+        `User with login '${username}' does not found`,
+      );
+    }
+
+    console.log('Find User by Login');
+    console.log(user);
+    return this.convertDate(user) as UserEntity;
+  }
+
   async update(id: string, updateUserDto: UpdateUserDto): Promise<FindUserDTO> {
     const user = await this.repository.findOneBy({ id: id });
 
@@ -86,7 +100,9 @@ export class UserService {
     return returnedUser;
   }
 
-  private convertDate(user: FindUserDTO): FindUserDTO {
+  private convertDate(
+    user: FindUserDTO | UserEntity,
+  ): FindUserDTO | UserEntity {
     return {
       ...user,
       updatedAt: new Date(user.updatedAt).getTime(),

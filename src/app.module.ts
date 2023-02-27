@@ -20,6 +20,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { TypeORMConfig } from './typeorm-config';
 import { LoggerModule } from './logger/logger.module';
 import { LoggerMiddleware } from './logger/logger.middleware';
+import { AuthModule } from './auth/auth.module';
+import { LocalStrategy } from './auth/local.strategy';
+import { PassportModule } from '@nestjs/passport';
 
 @Module({
   imports: [
@@ -36,6 +39,8 @@ import { LoggerMiddleware } from './logger/logger.middleware';
     ArtistModule,
     FavsModule,
     LoggerModule,
+    AuthModule,
+    PassportModule,
   ],
   controllers: [AppController],
   providers: [
