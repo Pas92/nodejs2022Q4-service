@@ -23,10 +23,19 @@ export class AlbumService {
   }
 
   async findOne(id: string): Promise<AlbumEntity> {
-    const album = await this.repository.findOneBy({ id: id });
+    const album = await this.repository.findOne({
+      where: {
+        id: id,
+      },
+      relations: ['artistId'],
+    });
     if (album === null) {
       throw new NotFoundException(`Album with ID ${id} does not found`);
     }
+    // return {
+    //   ...album,
+    //   artistId: (album.artistId as ArtistEntity).id,
+    // };
     return album;
   }
 

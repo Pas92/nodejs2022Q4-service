@@ -34,6 +34,8 @@ export class AlbumEntity implements Album {
 
   @ManyToOne((type) => ArtistEntity, (artist) => artist.albumIds, {
     onDelete: 'SET NULL',
+    onUpdate: 'CASCADE',
+    nullable: true,
   })
   @JoinColumn({
     name: 'artistId',

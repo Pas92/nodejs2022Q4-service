@@ -10,7 +10,7 @@
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
-    "start:n": "npm run build && npm run typeorm:revert && npm run typeorm:create && npm run typeorm:generate && npm run typeorm:run && nodemon --config nodemon.json -L",
+    "start:n": "npm run build && rm -rf src/migration && npm run typeorm:create && npm run typeorm:generate && npm run typeorm:run && nodemon --config nodemon.json -L",
     "start:dev": "npm run typeorm:revert && npm run typeorm:create && npm run typeorm:generate && npm run typeorm:run && nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
