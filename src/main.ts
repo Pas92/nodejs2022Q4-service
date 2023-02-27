@@ -4,7 +4,6 @@ import { AppModule } from './app.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { ConfigService } from '@nestjs/config';
 import { LoggerFilter } from './logger/logger.filter';
-import { Logger, LogLevel } from '@nestjs/common';
 import { AppLogger } from './logger/logger.service';
 
 async function bootstrap() {
@@ -24,6 +23,7 @@ async function bootstrap() {
     .setTitle('Home Library service')
     .setDescription('Home Library service REST API by Pas92')
     .setVersion('1.0')
+    .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, swaggerConfig);
   SwaggerModule.setup('api', app, document);
