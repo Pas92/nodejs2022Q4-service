@@ -12,14 +12,20 @@ import { v4 as uuidv4 } from 'uuid';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
+import 'dotenv/config';
+import * as bcrypt from 'bcrypt';
+
 @Injectable()
 export class UserService {
   @InjectRepository(UserEntity)
   private readonly repository: Repository<UserEntity>;
 
   async create(createUserDto: CreateUserDto): Promise<FindUserDTO> {
+    const salt = await bcrypt.genSalt(+process.env.CRYPT_SALT);
+    const hash = await bcrypt.hash(createUserDto.password, salt);
     const user: UserEntity = {
       ...createUserDto,
+      password: hash,
       id: uuidv4(),
       version: 1,
     };
@@ -68,12 +74,20 @@ export class UserService {
       throw new NotFoundException(`User with ID ${id} does not found`);
     }
 
-    if (user.password !== updateUserDto.oldPassword) {
+    const isValidPassword = await bcrypt.compare(
+      updateUserDto.oldPassword,
+      user.password,
+    );
+
+    if (!isValidPassword) {
       throw new ForbiddenException('Wrong password');
     }
 
+    const salt = await bcrypt.genSalt(+process.env.CRYPT_SALT);
+    const newHash = await bcrypt.hash(updateUserDto.newPassword, salt);
+
     await this.repository.update(id, {
-      password: updateUserDto.newPassword,
+      password: newHash,
       version: user.version + 1,
     });
 
